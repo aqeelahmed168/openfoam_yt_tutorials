@@ -1,0 +1,30 @@
+# git-ls-files --others --exclude-from=.git/info/exclude
+# Lines that start with '#' are comments.
+
+
+# *.gz # do not ignore .gz file like for stl 
+log.*
+postProcessing
+*~
+processor*
+constant/polyMesh*
+!0.org
+!0
+constant/extendedFeatureEdgeMesh
+*.eMesh
+constant/polyMesh # check
+constant/polyMesh/*
+constant/cellToRegion
+dynamicCode
+*.OpenFOAM
+*.o
+*.png
+*.ogv
+*.wmv
+*.mp4
+*.gif
+*.vtk
+*.pdf
+*.ipynb # jupyter-notebook files
+.vscode/* # visual studio code files
+*.DS_Store
