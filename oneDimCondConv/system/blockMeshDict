@@ -1,0 +1,92 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  7
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+convertToMeters 1;
+
+L 1; // length of 1D domain
+
+dy 1;
+dz 1;
+
+// Simple block
+
+//     3-----2      y+|
+//   7/|   6/|        |   
+//   | 0---|-1        o-----
+//   | /   | /       /     x+
+//   4-----5      z+/  
+//                      
+
+vertices
+(
+    (0  0     0)   // 0  points 0 is origin
+    ($L 0     0)   // 1  points 0 to 1 define orientation of first axis (+x)     
+    ($L $dy   0)   // 2  points 1 to 2 define orientation of 2nd axis (+)
+    (0  $dy   0)   // 3  points 0 to 3 define back plane (-z)
+    (0  0   $dz)   // 4  points 4 to 7 define front plane (+z)
+    ($L 0   $dz)   // 5 
+    ($L $dy $dz)   // 6
+    (0  $dy $dz)   // 7
+);
+
+blocks
+(
+    hex (0 1 2 3 4 5 6 7) (5 1 1) simpleGrading (1 1 1)
+);
+
+edges
+(
+);
+
+boundary
+(
+    fixedTemp
+    {
+        type wall; // or patch
+        faces
+        (
+            (4 7 3 0) // left face
+        );
+    }
+    
+    insulated
+    {
+        type wall;
+        faces
+        (
+            (5 1 2 6) // right face
+        );
+    }
+    
+    frontBackTopBottom
+    {
+        type empty;
+        faces
+        (
+            (0 3 2 1) // back
+            (4 5 6 7) // front
+            (7 6 3 2) // top
+            (0 1 5 4) // bottom
+        );
+    }
+    
+);
+
+mergePatchPairs
+(
+);
+
+// ************************************************************************* //
