@@ -1,0 +1,16 @@
+solid inlet_fluid
+ facet normal  0.000000e+00  0.000000e+00 -1.000000e+00
+   outer loop
+     vertex -3.735000e+01  1.307000e+02 -2.500000e+02
+     vertex  3.735000e+01  0.000000e+00 -2.500000e+02
+     vertex -3.735000e+01  0.000000e+00 -2.500000e+02
+   endloop
+ endfacet
+ facet normal -0.000000e+00 -0.000000e+00 -1.000000e+00
+   outer loop
+     vertex  3.735000e+01  1.307000e+02 -2.500000e+02
+     vertex  3.735000e+01  0.000000e+00 -2.500000e+02
+     vertex -3.735000e+01  1.307000e+02 -2.500000e+02
+   endloop
+ endfacet
+endsolid

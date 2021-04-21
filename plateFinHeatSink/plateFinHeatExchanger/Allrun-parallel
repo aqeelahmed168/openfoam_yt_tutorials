@@ -1,0 +1,22 @@
+#!/bin/sh
+
+cd ${0%/*} || exit 1
+
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+rm -rf constant/polyMesh/sets
+
+runApplication blockMesh
+runApplication decomposePar
+#runApplication snappyHexMesh -overwrite
+#ideasUnvToFoam ../fluidHeaterFins.unv
+runParallel snappyHexMesh -overwrite
+runParallel transformPoints -scale "(1e-3 1e-3 1e-3)"
+# Split the mesh into regions
+runParallel splitMeshRegions -cellZones -overwrite
+#runApplication splitMeshRegions -cellZones -overwrite
+
+runApplication decomposePar -allRegions
+runParallel $(getApplication)
+runApplication reconstructPar -allRegions
+#paraFoam -touchAll
